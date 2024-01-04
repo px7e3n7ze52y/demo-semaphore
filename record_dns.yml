@@ -1,0 +1,11 @@
+---
+- name: Add DNS A Record
+  hosts: servers
+  gather_facts: no
+  tasks:
+    - name: Add DNS A record
+      win_shell: |
+        Add-DnsServerResourceRecord -ZoneName "test.com" -A -Name "test" -IPv4Address "10.10.70.204"
+      become: yes
+      become_user: administrator
+

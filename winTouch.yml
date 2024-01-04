@@ -1,0 +1,8 @@
+---
+-  name: working with window server
+   hosts: servers
+   tasks:
+    - name: Create file
+      win_file:
+        path: C:\Users\Public\Documents\demo.txt
+        state: touch
