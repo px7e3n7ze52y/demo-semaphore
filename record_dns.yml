@@ -1,6 +1,6 @@
 ---
 - name: Add DNS A Record
-  hosts: servers
+  hosts: node01
   gather_facts: no
   tasks:
     - name: Add DNS A record
