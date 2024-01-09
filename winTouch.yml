@@ -1,6 +1,6 @@
 ---
 -  name: working with window server
-   hosts: servers
+   hosts: node01
    tasks:
     - name: Create file
       win_file:
