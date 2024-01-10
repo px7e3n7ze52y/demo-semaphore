@@ -1,11 +1,20 @@
 ---
 - name: Add DNS A Record
-  hosts: node01
+  hosts: all
   gather_facts: no
+  vars:
+    dns_records:
+      - name: server1
+        type: A
+        value: 10.10.70.201
+
+      - name: server2
+        type: A
+        value: 10.10.70.202
   tasks:
     - name: Add DNS A record
       win_shell: |
-        Add-DnsServerResourceRecord -ZoneName "test.com" -A -Name "demo" -IPv4Address "10.10.70.202"
+        Add-DnsServerResourceRecord -ZoneName "test.com" -A -Name {{item.name}} -IPv4Address {{item.value}}
       become: yes
       become_user: administrator
-
+      with_items: "{{dns_records}}"
