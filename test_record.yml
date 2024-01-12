@@ -1,0 +1,24 @@
+---
+- name: Add DNS A Record
+  hosts: servers
+  gather_facts: no
+  vars:
+    dns_records:
+      - name: server3
+        type: A
+        value: 10.10.70.201
+
+      - name: server4
+        type: A
+        value: 10.10.70.202
+
+  tasks:
+    - name: Add or Update DNS A Record
+      win_shell: |
+        $existingRecord = Get-DnsServerResourceRecord -ZoneName "test.com" -Name '{{ item.name }}' -RRType "A" -ErrorAction SilentlyContinue
+        if ($existingRecord) {
+          Remove-DnsServerResourceRecord -ZoneName "test.com" -RRType "A" -Name '{{ item.name }}' -Force
+        }
+        Add-DnsServerResourceRecord -ZoneName "test.com" -A -Name '{{ item.name }}' -IPv4Address '{{ item.value }}'
+      with_items: "{{ dns_records }}"
+
