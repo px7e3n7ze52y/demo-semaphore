@@ -1,6 +1,6 @@
 ---
 - name: Add DNS A Record
-  hosts: servers
+  hosts: all
   gather_facts: no
   vars:
     dns_records:
